@@ -16,25 +16,26 @@ function verify(token) {
 const check = {
     own: function(req, owner) {
         const decoded = decodeHeader(req);
-        console.log(decoded);
 
-        //comprobar si es o no propio
         if (decoded.id !== owner) {
             throw error('No puedes hacer esto', 401);
-            //throw new Error('No puedes hacer esto');
         }
 
     },
+
+    logged: function(req) {
+        const decoded = decodeHeader(req);
+    }, 
 }
 
 function getToken(auth) {
     if (!auth) {
-        throw error('Token doesnt exist');
+        throw error('Token doesnt exist', 401);
         //throw new Error('Token doesnt exist');
     }
 
     if (auth.indexOf('Bearer ')=== -1) {
-        throw error('Invalid format');
+        throw error('Invalid format', 401);
         //throw new Error('Invalid format');
     }
 
