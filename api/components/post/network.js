@@ -8,6 +8,8 @@ const router = express.Router();
 // Routes
 router.get('/', list);
 router.get('/:id', get);
+router.post('/',upsert);
+router.put('/',upsert);
 
 //function 
 function list(req, res, next){
@@ -22,6 +24,15 @@ function get(req, res, next) {
     Controller.get(req.params.id)
         .then((data) => {
             response.success(req, res, data, 200);
+        })
+        .catch(next);
+    
+}
+
+function upsert(req, res, next) {
+    Controller.upsert(req.body)
+        .then((user) => {
+            response.success(req, res, user, 201);
         })
         .catch(next);
     
